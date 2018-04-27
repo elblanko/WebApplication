@@ -16,9 +16,9 @@ namespace WebApplication
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //Cada que arranca si el modelo cambío
-            Database.SetInitializer(
-                new MigrateDatabaseToLatestVersion<Models.WebApplicationContext, Migrations.Configuration>());
+            //Cada que arranca verifica si el modelo cambío
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion
+                <Models.WebApplicationContext, Migrations.Configuration>());
         }
     }
 }
