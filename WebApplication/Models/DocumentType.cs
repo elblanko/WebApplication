@@ -18,5 +18,6 @@ namespace WebApplication.Models
          * Ej. Un documento tiene n Empleados
          */
         public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

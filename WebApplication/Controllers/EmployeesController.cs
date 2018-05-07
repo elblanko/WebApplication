@@ -35,7 +35,7 @@ namespace WebApplication.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Description");
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(dt => dt.Description), "DocumentTypeId", "Description");
             return View();
         }
 

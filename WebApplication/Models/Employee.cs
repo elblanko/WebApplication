@@ -22,7 +22,7 @@ namespace WebApplication.Models
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "You must enter a {0}")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/mm/dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
 
         //Como esta propiedad no se esta mapeando con EF, es necesario agregar la entrada a la vista (inedx)
@@ -38,7 +38,7 @@ namespace WebApplication.Models
        
         [Display(Name = "Entry Time")]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:yyyy/mm/dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime StartTime   { get; set; }
 
         [DataType(DataType.EmailAddress)]

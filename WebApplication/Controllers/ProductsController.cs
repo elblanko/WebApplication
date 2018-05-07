@@ -23,7 +23,7 @@ namespace WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Products products = db.Products.Find(id);
+            Product products = db.Products.Find(id);
             if (products == null)
             {
                 return HttpNotFound();
@@ -42,7 +42,7 @@ namespace WebApplication.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductId,Description,Price,LastBuy,Stock,Remarks")] Products products)
+        public ActionResult Create([Bind(Include = "ProductId,Description,Price,LastBuy,Stock,Remarks")] Product products)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Products products = db.Products.Find(id);
+            Product products = db.Products.Find(id);
             if (products == null)
             {
                 return HttpNotFound();
@@ -74,7 +74,7 @@ namespace WebApplication.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,Description,Price,LastBuy,Stock,Remarks")] Products products)
+        public ActionResult Edit([Bind(Include = "ProductId,Description,Price,LastBuy,Stock,Remarks")] Product products)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Products products = db.Products.Find(id);
+            Product products = db.Products.Find(id);
             if (products == null)
             {
                 return HttpNotFound();
@@ -105,7 +105,7 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Products products = db.Products.Find(id);
+            Product products = db.Products.Find(id);
             db.Products.Remove(products);
             db.SaveChanges();
             return RedirectToAction("Index");

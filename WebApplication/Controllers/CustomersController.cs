@@ -6,121 +6,113 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
-    public class DocumentTypesController : Controller
+    public class CustomersController : Controller
     {
         private WebApplicationContext db = new WebApplicationContext();
 
-        // GET: DocumentTypes
+        // GET: Customers
         public ActionResult Index()
         {
-            return View(db.DocumentTypes.ToList());
+            var customers = db.Customers.Include(c => c.DocumentType);
+            return View(customers.ToList());
         }
 
-        // GET: DocumentTypes/Details/5
+        // GET: Customers/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DocumentType documentType = db.DocumentTypes.Find(id);
-            if (documentType == null)
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
             {
                 return HttpNotFound();
             }
-            return View(documentType);
+            return View(customer);
         }
 
-        // GET: DocumentTypes/Create
+        // GET: Customers/Create
         public ActionResult Create()
         {
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes.OrderBy(dt => dt.Description), "DocumentTypeId", "Description");
             return View();
         }
 
-        // POST: DocumentTypes/Create
+        // POST: Customers/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DocumentTypeId,Description")] DocumentType documentType)
+        public ActionResult Create([Bind(Include = "CustomerId,FirstName,LastName,Phone,Addres,Email,Document,DocumentTypeId")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                db.DocumentTypes.Add(documentType);
+                db.Customers.Add(customer);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(documentType);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Description", customer.DocumentTypeId);
+            return View(customer);
         }
 
-        // GET: DocumentTypes/Edit/5
+        // GET: Customers/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DocumentType documentType = db.DocumentTypes.Find(id);
-            if (documentType == null)
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
             {
                 return HttpNotFound();
             }
-            return View(documentType);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Description", customer.DocumentTypeId);
+            return View(customer);
         }
 
-        // POST: DocumentTypes/Edit/5
+        // POST: Customers/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DocumentTypeId,Description")] DocumentType documentType)
+        public ActionResult Edit([Bind(Include = "CustomerId,FirstName,LastName,Phone,Addres,Email,Document,DocumentTypeId")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(documentType).State = EntityState.Modified;
+                db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(documentType);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "DocumentTypeId", "Description", customer.DocumentTypeId);
+            return View(customer);
         }
 
-        // GET: DocumentTypes/Delete/5
+        // GET: Customers/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DocumentType documentType = db.DocumentTypes.Find(id);
-            if (documentType == null)
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
             {
                 return HttpNotFound();
             }
-            return View(documentType);
+            return View(customer);
         }
 
-        // POST: DocumentTypes/Delete/5
+        // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            DocumentType documentType = db.DocumentTypes.Find(id);
-            db.DocumentTypes.Remove(documentType);
-                
-            /*
-             * Se encierra en bloque tray/catch para evitar que la app truene al eliminar un document type
-             * Sin embargo el registro no se puede borrar
-             */
-            try
-            {
-                db.SaveChanges();
-            }
-            catch(System.Exception ex)
-            {
-                System.Console.Write(ex);
-            }
-            
+            Customer customer = db.Customers.Find(id);
+            db.Customers.Remove(customer);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 

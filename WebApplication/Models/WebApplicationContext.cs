@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace WebApplication.Models
 {
@@ -15,11 +16,21 @@ namespace WebApplication.Models
         {
         }
 
+        //Deshabilita borrado en cascada
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        }
+
         //Se crea contexto por cada tabla creada
-        public System.Data.Entity.DbSet<WebApplication.Models.Products> Products { get; set; }
+        public System.Data.Entity.DbSet<WebApplication.Models.Product> Products { get; set; }
 
         public System.Data.Entity.DbSet<WebApplication.Models.Employee> Employees { get; set; }
 
         public System.Data.Entity.DbSet<WebApplication.Models.DocumentType> DocumentTypes { get; set; }
+
+        public System.Data.Entity.DbSet<WebApplication.Models.Supplier> Suppliers { get; set; }
+
+        public System.Data.Entity.DbSet<WebApplication.Models.Customer> Customers { get; set; }
     }
 }
